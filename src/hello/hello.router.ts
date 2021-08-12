@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import * as helloRespository from './hello.repository';
+import * as helloController from './hello.controller';
 
 export const helloRouter = Router();
 
 helloRouter.get('/', (req, res) => {
-  const hello = helloRespository.getHello();
+  const hello = helloController.getHello();
   res.send(hello);
 });
