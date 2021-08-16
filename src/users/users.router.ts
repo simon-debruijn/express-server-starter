@@ -6,4 +6,3 @@ export const usersRouter = Router();
 usersRouter.get('/', usersController.getUsers);
 usersRouter.post('/register', usersController.register);
 usersRouter.post('/login', usersController.login);
-usersRouter.patch('/:email', usersController.changeUserByEmail);
