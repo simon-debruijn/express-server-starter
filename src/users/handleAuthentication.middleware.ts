@@ -13,7 +13,7 @@ export async function handleAuthentication(
     const token = req.headers.authorization;
 
     if (!token || !token?.startsWith('Bearer ')) {
-      throw new Unauthorized('Was not able to authenticate');
+      throw new Error('');
     }
 
     const tokenWithoutPrefix = token.split('Bearer ')[1];
@@ -33,7 +33,7 @@ export async function handleAuthentication(
 
     // check if user is in users
     if (!user) {
-      throw new Unauthorized('Was not able to authenticate');
+      throw new Error('');
     }
     // call next if ok
     next();
