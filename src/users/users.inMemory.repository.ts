@@ -1,6 +1,8 @@
 import { IUser } from './IUser';
 import * as jwtProvider from '../tokens/jwt.provider';
 import bcrypt from 'bcrypt';
+import { AllowedMutationException } from '../exceptions/AllowedMutationException';
+import { BadRequest } from 'ts-httpexceptions';
 
 const users: IUser[] = [];
 
@@ -43,4 +45,35 @@ export function findUser(properties: Partial<IUser>): IUser | null {
   );
 
   return user ?? null;
+}
+
+export function changeUserByEmail(
+  email: string,
+  properties: Partial<IUser>,
+): IUser | null {
+  const allowedProperties = new Set(['tokens']);
+
+  const userIndex = users.findIndex((user) => user.email === email);
+
+  if (userIndex === -1) {
+    throw new BadRequest('User not found');
+  }
+
+  const notAllowed = Object.keys(properties).some(
+    (property) => !allowedProperties.has(property),
+  );
+
+  if (notAllowed) {
+    throw new AllowedMutationException(
+      `Mutation is only allowed on the following properties: ${[
+        ...allowedProperties.keys(),
+      ].join(', ')}`,
+    );
+  }
+
+  const changedUser = { ...users[userIndex], ...properties };
+
+  users[userIndex] = changedUser;
+
+  return changedUser ?? null;
 }

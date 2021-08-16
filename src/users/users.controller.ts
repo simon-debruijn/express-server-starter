@@ -5,6 +5,9 @@ import { User } from './User';
 import * as usersRespository from './users.inMemory.repository';
 import { BadRequest } from 'ts-httpexceptions';
 import bcrypt from 'bcrypt';
+import * as jwtProvider from '../tokens/jwt.provider';
+import { IUser } from './IUser';
+import { Exception } from '../exceptions/Exception';
 
 export function getUsers(req: Request, res: Response, next: NextFunction) {
   const users = usersRespository.getUsers();
@@ -24,6 +27,12 @@ export async function register(
 
     if (validationErrors.length > 0) {
       throw new ValidationException('User data is not valid', validationErrors);
+    }
+
+    const alreadyExists = usersRespository.findUser({ email: user.email });
+
+    if (alreadyExists) {
+      throw new Exception('User already exists');
     }
 
     const { token, user: userWithTokens } = await usersRespository.addUser(
@@ -57,10 +66,33 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       throw new BadRequest('Was unable to login');
     }
 
-    const lastToken = user.tokens[user.tokens.length - 1];
+    const token = await jwtProvider.sign(
+      { email },
+      process.env.JWT_SECRET ?? '',
+      {
+        algorithm: 'HS256',
+        expiresIn: '1d',
+      },
+    );
 
-    res.send({ token: lastToken });
+    usersRespository.changeUserByEmail(user.email, {
+      tokens: [...user.tokens, token],
+    });
+
+    res.send({ token });
   } catch (err) {
     next(err);
   }
+}
+
+export function changeUserByEmail(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const { email } = req.params;
+  const properties = req.body;
+  const user = usersRespository.changeUserByEmail(email, properties);
+
+  res.send(user);
 }
