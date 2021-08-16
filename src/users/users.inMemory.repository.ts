@@ -15,17 +15,18 @@ export async function addUser({
   user: IUser | null;
   token: string | null;
 }> {
-  let user: IUser;
-  let token: string;
-
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  token = await jwtProvider.sign({ email }, process.env.JWT_SECRET ?? '', {
-    algorithm: 'HS256',
-    expiresIn: '1d',
-  });
+  const token = await jwtProvider.sign(
+    { email },
+    process.env.JWT_SECRET ?? '',
+    {
+      algorithm: 'HS256',
+      expiresIn: '1d',
+    },
+  );
 
-  user = {
+  const user = {
     email,
     password: hashedPassword,
     tokens: [token],

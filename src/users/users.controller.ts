@@ -26,10 +26,9 @@ export async function register(
       throw new ValidationException('User data is not valid', validationErrors);
     }
 
-    const { token, user: userWithTokens } = await usersRespository.addUser({
-      email: user.email,
-      password: user.password,
-    });
+    const { token, user: userWithTokens } = await usersRespository.addUser(
+      user,
+    );
 
     const { password, ...userWithoutPassword } = userWithTokens ?? {};
 
