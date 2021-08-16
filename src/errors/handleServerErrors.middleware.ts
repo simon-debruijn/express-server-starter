@@ -6,5 +6,6 @@ export function handleServerErrors(
   response: Response,
   next: NextFunction,
 ) {
+  console.error(error);
   response.status(500).send('Internal server error');
 }

@@ -1,15 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
-import { Exception } from 'ts-httpexceptions';
+import { Exception as HttpException } from 'ts-httpexceptions';
+import { ValidationException } from './ValidationException';
 
-export function handleExceptions(
+export async function handleExceptions(
   error: Error,
   request: Request,
   response: Response,
   next: NextFunction,
 ) {
-  if (error instanceof Exception) {
-    const { name, type, status } = error;
-    return response.status(status).send({ name, type });
+  if (error instanceof HttpException) {
+    const { status, message, type, name } = error;
+    return response.status(error.status).send({ status, name, message, type });
   }
-  next();
+  if (error instanceof ValidationException) {
+    const { name, message, stack, errors } = error;
+    return response.status(400).send({ name, message, stack, errors });
+  }
+  next(error);
 }
