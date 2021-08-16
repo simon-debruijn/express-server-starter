@@ -38,6 +38,6 @@ export async function handleAuthentication(
     // call next if ok
     next();
   } catch (err) {
-    next(err);
+    next(new Unauthorized('Was not able to authenticate'));
   }
 }
