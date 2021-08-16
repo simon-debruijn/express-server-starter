@@ -6,7 +6,6 @@ import * as usersRespository from './users.inMemory.repository';
 import { BadRequest } from 'ts-httpexceptions';
 import bcrypt from 'bcrypt';
 import * as jwtProvider from '../tokens/jwt.provider';
-import { IUser } from './IUser';
 import { Exception } from '../exceptions/Exception';
 
 export function getUsers(req: Request, res: Response, next: NextFunction) {
@@ -92,7 +91,7 @@ export function changeUserByEmail(
 ) {
   const { email } = req.params;
   const properties = req.body;
-  const user = usersRespository.changeUserByEmail(email, properties);
-
-  res.send(user);
+  const { password, ...userWithoutPassword } =
+    usersRespository.changeUserByEmail(email, properties) ?? {};
+  res.send(userWithoutPassword);
 }
