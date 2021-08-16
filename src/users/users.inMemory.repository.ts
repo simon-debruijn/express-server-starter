@@ -1,5 +1,6 @@
 import { IUser } from './IUser';
 import * as jwtProvider from '../tokens/jwt.provider';
+import bcrypt from 'bcrypt';
 
 const users: IUser[] = [];
 
@@ -14,21 +15,19 @@ export async function addUser({
   user: IUser | null;
   token: string | null;
 }> {
-  let user: IUser | null = null;
-  let token: string | null = null;
+  let user: IUser;
+  let token: string;
 
-  token = await jwtProvider.sign(
-    { email, password },
-    process.env.JWT_SECRET ?? '',
-    {
-      algorithm: 'HS256',
-      expiresIn: '1d',
-    },
-  );
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  token = await jwtProvider.sign({ email }, process.env.JWT_SECRET ?? '', {
+    algorithm: 'HS256',
+    expiresIn: '1d',
+  });
 
   user = {
     email,
-    password,
+    password: hashedPassword,
     tokens: [token],
   };
 

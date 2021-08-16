@@ -4,6 +4,7 @@ import { ValidationException } from '../exceptions/ValidationException';
 import { User } from './User';
 import * as usersRespository from './users.inMemory.repository';
 import { BadRequest } from 'ts-httpexceptions';
+import bcrypt from 'bcrypt';
 
 export function getUsers(req: Request, res: Response, next: NextFunction) {
   const users = usersRespository.getUsers();
@@ -25,14 +26,14 @@ export async function register(
       throw new ValidationException('User data is not valid', validationErrors);
     }
 
-    const { email, password } = user;
-
     const { token, user: userWithTokens } = await usersRespository.addUser({
-      email,
-      password,
+      email: user.email,
+      password: user.password,
     });
 
-    res.send({ user: userWithTokens, token });
+    const { password, ...userWithoutPassword } = userWithTokens ?? {};
+
+    res.send({ user: userWithoutPassword, token });
   } catch (err) {
     next(err);
   }
@@ -48,7 +49,12 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
     const user = usersRespository.findUser({ email });
 
-    if (!user || user.password !== password) {
+    const isPasswordMatch = await bcrypt.compare(
+      password,
+      user?.password ?? '',
+    );
+
+    if (!user || !isPasswordMatch) {
       throw new BadRequest('Was unable to login');
     }
 
