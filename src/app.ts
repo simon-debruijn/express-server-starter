@@ -1,10 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import helmet from 'helmet';
+import compression from 'compression';
+
 import { helloRouter } from './hello/hello.router';
+import { usersRouter } from './users/users.router';
+
 import { handleExceptions } from './exceptions/handleExceptions.middleware';
 import { handleServerErrors } from './errors/handleServerErrors.middleware';
-import { usersRouter } from './users/users.router';
-import helmet from 'helmet';
 
 dotenv.config();
 
@@ -12,6 +15,7 @@ export const app = express();
 
 app.use(express.json());
 app.use(helmet());
+app.use(compression());
 
 app.use('/hello', helloRouter);
 app.use('/users', usersRouter);
