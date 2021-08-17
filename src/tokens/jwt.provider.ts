@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { IUser } from '../users/IUser';
 
 export function sign(
-  payload: string | object | Buffer,
+  payload: Pick<IUser, 'email'>,
   secretOrPrivateKey: jwt.Secret,
   options: jwt.SignOptions,
 ): Promise<string> {

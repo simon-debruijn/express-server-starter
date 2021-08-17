@@ -1,6 +1,4 @@
-interface IException extends Error {}
-
-export class Exception implements IException {
+export class Exception implements Error {
   name: string;
   message: string;
   stack?: string | undefined;
