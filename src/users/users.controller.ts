@@ -5,7 +5,7 @@ import { User } from './User';
 import * as usersRespository from './users.inMemory.repository';
 import { BadRequest } from 'ts-httpexceptions';
 import bcrypt from 'bcrypt';
-import * as jwtProvider from '../tokens/jwt.provider';
+import * as jwtProvider from '../jwts/jwt.provider';
 import { Exception } from '../exceptions/Exception';
 
 export function getUsers(req: Request, res: Response, next: NextFunction) {

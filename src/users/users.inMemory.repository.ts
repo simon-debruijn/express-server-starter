@@ -1,5 +1,5 @@
 import { IUser } from './IUser';
-import * as jwtProvider from '../tokens/jwt.provider';
+import * as jwtProvider from '../jwts/jwt.provider';
 import bcrypt from 'bcrypt';
 import { AllowedMutationException } from '../exceptions/AllowedMutationException';
 import { BadRequest } from 'ts-httpexceptions';

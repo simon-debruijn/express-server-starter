@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Unauthorized } from 'ts-httpexceptions';
 import * as usersRepository from '../users/users.inMemory.repository';
-import * as jwtProvider from '../tokens/jwt.provider';
+import * as jwtProvider from '../jwts/jwt.provider';
 
 export async function handleAuthentication(
   req: Request,
