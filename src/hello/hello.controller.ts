@@ -7,5 +7,6 @@ export function getHello(req: Request, res: Response) {
 }
 
 export function getForbidden(req: Request, res: Response) {
-  res.send('You were granted access');
+  const forbidden = helloRespository.getForbidden();
+  res.send(forbidden);
 }
