@@ -26,8 +26,4 @@ export class User implements IUser {
     this.email = email;
     this.password = password;
   }
-
-  toObject(): IUser {
-    return { email: this.email, password: this.password, tokens: this.tokens };
-  }
 }
