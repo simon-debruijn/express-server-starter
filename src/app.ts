@@ -13,9 +13,9 @@ dotenv.config();
 
 export const app = express();
 
+app.use(compression());
 app.use(express.json());
 app.use(helmet());
-app.use(compression());
 
 app.use('/hello', helloRouter);
 app.use('/users', usersRouter);
