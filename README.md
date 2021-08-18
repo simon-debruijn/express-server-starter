@@ -2,11 +2,10 @@
 
 ## Introduction
 
-This project is meant as a starter template for a ExpressJS REST API. The setup includes routing, error handling and authentication to get you going right away 
-to the fun stuff.
+This project is meant as a starter template for a ExpressJS REST API. The setup includes **routing**, **error handling** and **authentication** to get you going right away to the fun stuff.
 
-This project is written in Typescript, uses yarn as its package manager and includes tools like class-validator to validate user input, ts-httpexceptions for throwing HttpExceptions, 
-jsonwebtoken for signing and verifying tokens and bcrypt for hashing passwords.
+This project is written in **typescript**, uses **yarn** as its package manager and includes tools like **class-validator** to validate user input, **ts-httpexceptions** for throwing HttpExceptions, 
+**jsonwebtoken** for signing and verifying tokens and **bcrypt** for hashing passwords.
 
 ## Scripts
 
