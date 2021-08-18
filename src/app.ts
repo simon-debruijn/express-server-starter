@@ -10,7 +10,7 @@ import { usersRouter } from './users/users.router';
 import { handleExceptions } from './exceptions/handleExceptions.middleware';
 import { handleServerErrors } from './errors/handleServerErrors.middleware';
 
-import config from '../config.json';
+import config from './config.json';
 
 dotenv.config();
 

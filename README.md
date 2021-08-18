@@ -35,7 +35,7 @@ JWT_SECRET=
 
 ### yarn start
 
-`yarn start` start the application at /dist/src/index.js
+`yarn start` start the application at /dist/index.js
 
 ### yarn dev
 
