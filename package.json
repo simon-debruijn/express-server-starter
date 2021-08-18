@@ -10,7 +10,6 @@
     "yarn": "1.x"
   },
   "scripts": {
-    "tsc": "./node_modules/typescript/bin/tsc",
     "start": "tsc && node dist/index.js",
     "dev": "ts-node-dev src/index.ts",
     "format": "prettier . --write --ignore-path ./.gitignore",
