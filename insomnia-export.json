@@ -1,15 +1,15 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2021-08-16T12:40:25.648Z",
+  "__export_date": "2021-08-18T15:25:03.565Z",
   "__export_source": "insomnia.desktop.app:v2021.4.1",
   "resources": [
     {
       "_id": "req_6f5cbc9dced745819c7e9a043daa6b6f",
       "parentId": "wrk_46223e32f2b54d0788f68b62d0bcf090",
-      "modified": 1629116682675,
+      "modified": 1629300264197,
       "created": 1629108955549,
-      "url": "http://localhost:5000/hello/forbidden",
+      "url": "{{ _.base_url }}/hello/forbidden",
       "name": "Get hello forbidden",
       "description": "",
       "method": "GET",
@@ -40,9 +40,9 @@
     {
       "_id": "req_ae8a6c52c09b476783c6708c79e91371",
       "parentId": "wrk_46223e32f2b54d0788f68b62d0bcf090",
-      "modified": 1629116894346,
+      "modified": 1629293481333,
       "created": 1629116892326,
-      "url": "http://localhost:5000/hello",
+      "url": "{{ _.base_url }}/hello",
       "name": "Get hello",
       "description": "",
       "method": "GET",
@@ -63,15 +63,15 @@
     {
       "_id": "req_49f24cf0def3405395cf0f897efc7325",
       "parentId": "wrk_46223e32f2b54d0788f68b62d0bcf090",
-      "modified": 1629117554627,
+      "modified": 1629293491931,
       "created": 1628781573617,
-      "url": "http://localhost:5000/users/register",
+      "url": "{{ _.base_url }}/users/register",
       "name": "Register user",
       "description": "",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"password\"\n}"
+        "text": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"Mvg_2712\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -95,15 +95,15 @@
     {
       "_id": "req_92565d19f4e7472c84536196c8583a8e",
       "parentId": "wrk_46223e32f2b54d0788f68b62d0bcf090",
-      "modified": 1629117560848,
+      "modified": 1629293498548,
       "created": 1629108152516,
-      "url": "http://localhost:5000/users/login",
+      "url": "{{ _.base_url }}/users/login",
       "name": "Login user",
       "description": "",
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"password\"\n}"
+        "text": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"Mvg_2712\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -125,42 +125,13 @@
       "_type": "request"
     },
     {
-      "_id": "req_15b1bfd4530d431fba5a5344376f5d4a",
-      "parentId": "wrk_46223e32f2b54d0788f68b62d0bcf090",
-      "modified": 1629108071047,
-      "created": 1629108057806,
-      "url": "http://localhost:5000/users",
-      "name": "Get users",
-      "description": "",
-      "method": "GET",
-      "body": { "mimeType": "application/json", "text": "" },
-      "parameters": [],
-      "headers": [
-        {
-          "name": "Content-Type",
-          "value": "application/json",
-          "id": "pair_c65bb4bad48a4a23a410d08ced1cb33a"
-        }
-      ],
-      "authentication": {},
-      "metaSortKey": -1628646648903.5,
-      "isPrivate": false,
-      "settingStoreCookies": true,
-      "settingSendCookies": true,
-      "settingDisableRenderRequestBody": false,
-      "settingEncodeUrl": true,
-      "settingRebuildPath": true,
-      "settingFollowRedirects": "global",
-      "_type": "request"
-    },
-    {
       "_id": "env_dfca383ccd251d9f16c4914026671d0fa75ac6b5",
       "parentId": "wrk_46223e32f2b54d0788f68b62d0bcf090",
-      "modified": 1628781566972,
+      "modified": 1629293625539,
       "created": 1628781566972,
       "name": "Base Environment",
       "data": {},
-      "dataPropertyOrder": null,
+      "dataPropertyOrder": {},
       "color": null,
       "isPrivate": false,
       "metaSortKey": 1628781566972,
@@ -184,6 +155,32 @@
       "contents": "",
       "contentType": "yaml",
       "_type": "api_spec"
+    },
+    {
+      "_id": "env_9408a40e0ed34cb5889fa42dad0efa18",
+      "parentId": "env_dfca383ccd251d9f16c4914026671d0fa75ac6b5",
+      "modified": 1629293437117,
+      "created": 1629293409689,
+      "name": "production",
+      "data": { "base_url": "https://express-server-starter.herokuapp.com" },
+      "dataPropertyOrder": { "&": ["base_url"] },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1629293409689,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_0bccf05da04a4684ab27572a8a3b2186",
+      "parentId": "env_dfca383ccd251d9f16c4914026671d0fa75ac6b5",
+      "modified": 1629293644691,
+      "created": 1629293627864,
+      "name": "localhost",
+      "data": { "base_url": "http://localhost:5000" },
+      "dataPropertyOrder": { "&": ["base_url"] },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1629293627864,
+      "_type": "environment"
     }
   ]
 }
