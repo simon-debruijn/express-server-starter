@@ -10,8 +10,8 @@
     "yarn": "1.x"
   },
   "scripts": {
-    "dev": "tsc && node dist/index.js",
-    "start": "ts-node-dev src/index.ts",
+    "start": "npm i -g typescript && tsc && node dist/index.js",
+    "dev": "ts-node-dev src/index.ts",
     "format": "prettier . --write --ignore-path ./.gitignore",
     "lint": "eslint . --fix --ignore-path ./.gitignore",
     "lint:check": "eslint . --ignore-path ./.gitignore",
