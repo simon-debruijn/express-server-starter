@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && node dist/index.js",
+    "start": "yarn tsc && node dist/index.js",
     "dev": "ts-node-dev src/index.ts",
     "format": "prettier . --write --ignore-path ./.gitignore",
     "lint": "eslint . --fix --ignore-path ./.gitignore",
