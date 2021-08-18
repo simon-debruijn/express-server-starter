@@ -1,28 +1,17 @@
 import * as jwt from 'jsonwebtoken';
+import { promisify } from 'util';
 import { IUser } from '../users/IUser';
 
-export function sign(
-  payload: Pick<IUser, 'email'>,
-  secretOrPrivateKey: jwt.Secret,
-  options: jwt.SignOptions,
-): Promise<string> {
-  return new Promise((resolve, reject) => {
-    jwt.sign(payload, secretOrPrivateKey, options, (err, token) => {
-      if (err) return reject(err);
-      return resolve(token ?? '');
-    });
-  });
-}
+export const sign = promisify<
+  Pick<IUser, 'email'>,
+  jwt.Secret,
+  jwt.SignOptions | undefined,
+  string
+>(jwt.sign);
 
-export function verify(
-  token: string,
-  secretOrPublicKey: jwt.Secret | jwt.GetPublicKeyOrSecret,
-  options?: jwt.VerifyOptions | undefined,
-): Promise<IUser> {
-  return new Promise((resolve, reject) => {
-    jwt.verify(token, secretOrPublicKey, options, (err, decoded) => {
-      if (err) return reject(err);
-      return resolve(decoded as unknown as IUser);
-    });
-  });
-}
+export const verify = promisify<
+  string,
+  jwt.Secret,
+  jwt.VerifyOptions | undefined,
+  IUser
+>(jwt.verify);
