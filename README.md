@@ -1,5 +1,7 @@
 # express-server-starter
 
+Running server on https://express-server-starter.herokuapp.com
+
 ## Introduction
 
 This project is meant as a starter template for a ExpressJS REST API. The setup includes **routing**, **error handling** and **authentication** to get you going right away to the fun stuff.
@@ -27,9 +29,13 @@ JWT_SECRET=
 
 `yarn` to install all dependencies
 
+### yarn build
+
+`yarn build` to build javascript to dist directory
+
 ### yarn start
 
-`yarn start` to build and start a production ready application
+`yarn start` start the application at /dist/src/index.js
 
 ### yarn dev
 
