@@ -24,6 +24,7 @@ JWT_SECRET=
 ## Scripts
 
 ### yarn
+
 `yarn` to install all dependencies
 
 ### yarn start
