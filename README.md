@@ -23,30 +23,29 @@ JWT_SECRET=
 
 ## Scripts
 
-### `yarn`
+### yarn
+`yarn` to install all dependencies
 
-to install all dependencies
+### yarn start
 
-### `yarn start`
+`yarn start` to build and start a production ready application
 
-to build and start a production ready application
+### yarn dev
 
-### `yarn dev`
+`yarn dev` to start a auto reload server for development
 
-to start a auto reload server for development
+### yarn format
 
-### `yarn format`
+`yarn format` to format and auto fix the code with prettier
 
-to format and auto fix the code with prettier
+### yarn lint
 
-### `yarn lint`
+`yarn lint` to lint and auto fix the code with eslint
 
-to lint and auto fix the code with eslint
+### yarn lint:check
 
-### `yarn lint:check`
+`yarn lint:check` to check linting issues (without auto fix) of the code with eslint
 
-to check linting issues (without auto fix) of the code with eslint
+### yarn types:check
 
-### `yarn types:check`
-
-to check for typescript errors
+`yarn types:check` to check for typescript errors
