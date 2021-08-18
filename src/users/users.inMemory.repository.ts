@@ -6,10 +6,6 @@ import { BadRequest } from 'ts-httpexceptions';
 
 const users: IUser[] = [];
 
-export function getUsers() {
-  return users;
-}
-
 export async function addUser({
   email,
   password,

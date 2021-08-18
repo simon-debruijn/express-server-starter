@@ -8,12 +8,6 @@ import bcrypt from 'bcrypt';
 import * as jwtProvider from '../jwts/jwt.provider';
 import { Exception } from '../exceptions/Exception';
 
-export function getUsers(req: Request, res: Response, next: NextFunction) {
-  const users = usersRespository.getUsers();
-
-  res.send({ users });
-}
-
 export async function register(
   req: Request,
   res: Response,
