@@ -11,12 +11,12 @@ describe('hello.controller', () => {
     } as unknown as Response;
   });
 
-  test("getHello sends { hello: 'world' } as response", () => {
+  test("getHello should send { hello: 'world' } as response", () => {
     getHello(request, response);
     expect(response.send).toBeCalledWith({ hello: 'world' });
   });
 
-  test("getForbidden send 'You were granted access' as response", () => {
+  test("getForbidden should send 'You were granted access' as response", () => {
     getForbidden(request, response);
     expect(response.send).toBeCalledWith('You were granted access');
   });
