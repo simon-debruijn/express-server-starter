@@ -146,6 +146,7 @@ describe('users.controller', () => {
 
     expect(typeof responseBody.token).toEqual('string');
     expect(typeof responseBody.user.email).toEqual('string');
+    expect(responseBody.user.password).not.toBeDefined();
     expect(Array.isArray(responseBody.user.tokens)).toBeTruthy();
     expect(typeof responseBody.user.tokens[0]).toEqual('string');
   });
