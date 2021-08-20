@@ -2,7 +2,6 @@
   "name": "express-server-starter",
   "description": "This project is meant as a starter template for a ExpressJS REST API. The setup includes routing, error handling and authentication to get you going right away to the fun stuff. This project is written in typescript, uses yarn as its package manager and includes tools like class-validator to validate user input, ts-httpexceptions for throwing HttpExceptions, jsonwebtoken for signing and verifying tokens and bcrypt for hashing passwords.",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "type": "commonjs",
   "engines": {
@@ -19,7 +18,7 @@
     "lint": "eslint . --fix --ignore-path ./.gitignore",
     "lint:check": "eslint . --ignore-path ./.gitignore",
     "types:check": "tsc --noEmit",
-    "test": "yarn build && jest /dist"
+    "test": "jest"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -46,6 +45,7 @@
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "supertest": "^6.1.6",
+    "ts-jest": "^27.0.5",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.3.5"
   }
