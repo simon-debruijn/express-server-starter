@@ -2,26 +2,35 @@ import { NextFunction, Request, Response } from 'express';
 import { Exception } from '../exceptions/Exception';
 import { ValidationException } from '../exceptions/ValidationException';
 import { register } from './users.controller';
+import * as usersRespository from './users.inMemory.repository';
 
 describe('users.controller', () => {
   let request: Request,
     response: Response,
     next: NextFunction,
-    exception: ValidationException | Exception | null;
+    exception: ValidationException | Exception | null,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    responseBody: any | null;
   const validEmail = 'test@test.com';
   const validPassword = 'gjhfjghfygz';
 
   beforeEach(() => {
     exception = null;
+    responseBody = null;
+
     request = {} as unknown as Request;
     response = {
-      send: jest.fn(),
+      send: jest.fn((res) => {
+        responseBody = res;
+      }),
     } as unknown as Response;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    next = jest.fn((err?: any) => {
+    next = jest.fn((err) => {
       if (err) exception = err;
-    });
-    process.env = { JWT_SECRET: 'pindakaas' };
+    }) as unknown as NextFunction;
+
+    process.env = { JWT_SECRET: 'shhhhh' };
+
+    usersRespository.clearAllUsers();
   });
 
   test('register should call next with a validation exception when email is not valid', async () => {
@@ -128,5 +137,16 @@ describe('users.controller', () => {
     await register(request, response, next);
 
     expect(exception?.message).toEqual('User already exists');
+  });
+
+  test('register should send a response with the new user without password and the token', async () => {
+    request.body = { email: validEmail, password: validPassword };
+
+    await register(request, response, next);
+
+    expect(typeof responseBody.token).toEqual('string');
+    expect(typeof responseBody.user.email).toEqual('string');
+    expect(Array.isArray(responseBody.user.tokens)).toBeTruthy();
+    expect(typeof responseBody.user.tokens[0]).toEqual('string');
   });
 });

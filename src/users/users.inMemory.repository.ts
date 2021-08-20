@@ -4,7 +4,11 @@ import bcrypt from 'bcrypt';
 import { AllowedMutationException } from '../exceptions/AllowedMutationException';
 import { BadRequest } from 'ts-httpexceptions';
 
-const users: IUser[] = [];
+let users: IUser[] = [];
+
+export function clearAllUsers() {
+  users = [];
+}
 
 export async function addUser({
   email,
@@ -35,7 +39,9 @@ export async function addUser({
   return { user, token };
 }
 
-export function findUser(properties: Partial<IUser>): IUser | null {
+export async function findUser(
+  properties: Partial<IUser>,
+): Promise<IUser | null> {
   const user = users.find((user) =>
     Object.entries(properties).every(([key, value]) => user[key] === value),
   );

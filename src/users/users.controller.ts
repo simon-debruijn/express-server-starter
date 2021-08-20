@@ -22,7 +22,9 @@ export async function register(
       throw new ValidationException('User data is not valid', validationErrors);
     }
 
-    const alreadyExists = usersRespository.findUser({ email: user.email });
+    const alreadyExists = !!(await usersRespository.findUser({
+      email: user.email,
+    }));
 
     if (alreadyExists) {
       throw new Exception('User already exists');
@@ -48,7 +50,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       throw new BadRequest('Was unable to login');
     }
 
-    const user = usersRespository.findUser({ email });
+    const user = await usersRespository.findUser({ email });
 
     const isPasswordMatch = await bcrypt.compare(
       password,
@@ -74,6 +76,8 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
     res.send({ token });
   } catch (err) {
+    console.log('here');
+
     next(err);
   }
 }
