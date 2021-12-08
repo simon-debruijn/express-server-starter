@@ -13,6 +13,7 @@ describe('handleServerErrors.middleware', () => {
     next = jest.fn();
     console.error = jest.fn();
   });
+
   test('handleServerErrors should send a response if an error is passed', () => {
     const error = new Error('Server error');
     handleServerErrors(error, request, response, next);
