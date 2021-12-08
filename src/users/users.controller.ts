@@ -72,8 +72,6 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
     res.send({ token });
   } catch (err) {
-    console.log('here');
-
     next(err);
   }
 }
