@@ -50,10 +50,8 @@ export async function login(req: Request, res: Response, next: NextFunction) {
 
     const user = await usersRepository.findUser({ email });
 
-    const isPasswordMatch = await bcrypt.compare(
-      password,
-      user?.password ?? '',
-    );
+    const isPasswordMatch =
+      user?.password && (await bcrypt.compare(password, user.password));
 
     if (!user || !isPasswordMatch) {
       throw new BadRequest('Was unable to login');
