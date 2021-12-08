@@ -2,7 +2,7 @@ import { validate } from 'class-validator';
 import { NextFunction, Request, Response } from 'express';
 import { ValidationException } from '../exceptions/ValidationException';
 import { User } from './User';
-import * as usersRespository from './users.inMemory.repository';
+import * as usersRepository from './users.inMemory.repository';
 import { BadRequest } from 'ts-httpexceptions';
 import bcrypt from 'bcrypt';
 import * as jwtProvider from '../jwts/jwt.provider';
@@ -22,7 +22,7 @@ export async function register(
       throw new ValidationException('User data is not valid', validationErrors);
     }
 
-    const alreadyExists = !!(await usersRespository.findUser({
+    const alreadyExists = !!(await usersRepository.findUser({
       email: user.email,
     }));
 
@@ -30,9 +30,7 @@ export async function register(
       throw new Exception('User already exists');
     }
 
-    const { token, user: userWithTokens } = await usersRespository.addUser(
-      user,
-    );
+    const { token, user: userWithTokens } = await usersRepository.addUser(user);
 
     const { password, ...userWithoutPassword } = userWithTokens ?? {};
 
@@ -50,7 +48,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       throw new BadRequest('Was unable to login');
     }
 
-    const user = await usersRespository.findUser({ email });
+    const user = await usersRepository.findUser({ email });
 
     const isPasswordMatch = await bcrypt.compare(
       password,
@@ -70,7 +68,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       },
     );
 
-    usersRespository.changeUserByEmail(user.email, {
+    await usersRepository.changeUserByEmail(user.email, {
       tokens: [...user.tokens, token],
     });
 
@@ -82,7 +80,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
   }
 }
 
-export function changeUserByEmail(
+export async function changeUserByEmail(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -90,6 +88,6 @@ export function changeUserByEmail(
   const { email } = req.params;
   const properties = req.body;
   const { password, ...userWithoutPassword } =
-    usersRespository.changeUserByEmail(email, properties) ?? {};
+    (await usersRepository.changeUserByEmail(email, properties)) ?? {};
   res.send(userWithoutPassword);
 }

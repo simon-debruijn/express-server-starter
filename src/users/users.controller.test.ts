@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Exception } from '../exceptions/Exception';
 import { ValidationException } from '../exceptions/ValidationException';
 import { register } from './users.controller';
-import * as usersRespository from './users.inMemory.repository';
+import * as usersRepository from './users.inMemory.repository';
 
 describe('users.controller', () => {
   let request: Request,
@@ -30,7 +30,7 @@ describe('users.controller', () => {
 
     process.env = { JWT_SECRET: 'shhhhh' };
 
-    usersRespository.clearAllUsers();
+    usersRepository.clearAllUsers();
   });
 
   test('register should call next with a validation exception when email is not valid', async () => {
