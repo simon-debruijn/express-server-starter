@@ -49,10 +49,10 @@ export async function findUser(
   return user ?? null;
 }
 
-export function changeUserByEmail(
+export async function changeUserByEmail(
   email: string,
   properties: Partial<IUser>,
-): IUser | null {
+): Promise<IUser | null> {
   const allowedProperties = new Set(['tokens']);
 
   const userIndex = users.findIndex((user) => user.email === email);
