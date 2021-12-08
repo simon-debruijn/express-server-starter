@@ -1,7 +1,7 @@
 import { IUser } from './IUser';
 import * as jwtProvider from '../jwts/jwt.provider';
 import bcrypt from 'bcrypt';
-import { AllowedMutationException } from '../exceptions/AllowedMutationException';
+import { MutationNotAllowedException } from '../exceptions/MutationNotAllowedException';
 import { BadRequest } from 'ts-httpexceptions';
 
 let users: IUser[] = [];
@@ -66,7 +66,7 @@ export async function changeUserByEmail(
   );
 
   if (notAllowed) {
-    throw new AllowedMutationException(
+    throw new MutationNotAllowedException(
       `Mutation is only allowed on the following properties: ${[
         ...allowedProperties.keys(),
       ].join(', ')}`,

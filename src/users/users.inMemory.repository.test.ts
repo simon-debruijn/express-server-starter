@@ -1,5 +1,5 @@
 import { BadRequest } from 'ts-httpexceptions';
-import { AllowedMutationException } from '../exceptions/AllowedMutationException';
+import { MutationNotAllowedException } from '../exceptions/MutationNotAllowedException';
 import * as usersRepository from './users.inMemory.repository';
 
 describe('users.inMemory.repository', () => {
@@ -24,7 +24,7 @@ describe('users.inMemory.repository', () => {
     expect(result.user?.email).toEqual(validEmail);
     expect(result.user?.tokens).toEqual([result.token]);
     expect(typeof result.user?.password).toEqual('string');
-    expect(typeof result.user?.password).not.toEqual(validPassword);
+    expect(result.user?.password).not.toEqual(validPassword);
 
     expect(isFound).toBeTruthy();
   });
@@ -51,7 +51,7 @@ describe('users.inMemory.repository', () => {
     }
   });
 
-  test('changeUserByEmail should throw AllowedMutationException if the provided property is not allowed', async () => {
+  test('changeUserByEmail should throw MutationNotAllowedException if the provided property is not allowed', async () => {
     try {
       await usersRepository.addUser({
         email: validEmail,
@@ -62,7 +62,7 @@ describe('users.inMemory.repository', () => {
         password: 'gotcha',
       });
     } catch (error) {
-      expect(error).toBeInstanceOf(AllowedMutationException);
+      expect(error).toBeInstanceOf(MutationNotAllowedException);
       expect(error.message).toEqual(
         `Mutation is only allowed on the following properties: tokens`,
       );
