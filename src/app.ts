@@ -1,7 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
-import compression from 'compression';
 import cors from 'cors';
 import os from 'os';
 
@@ -20,10 +19,9 @@ process.env.UV_THREADPOOL_SIZE = `${os.cpus().length ?? 4}`;
 
 export const app = express();
 
-app.use(compression());
-app.use(express.json());
 app.use(helmet());
 app.use(cors({ origin: config.origins }));
+app.use(express.json());
 
 app.use('/hello', helloRouter);
 app.use('/users', usersRouter);
