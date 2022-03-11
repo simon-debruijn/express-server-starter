@@ -1,5 +1,6 @@
+import 'dotenv/config';
+
 import express from 'express';
-import dotenv from 'dotenv';
 import helmet from 'helmet';
 import cors from 'cors';
 import os from 'os';
@@ -11,8 +12,6 @@ import { handleExceptions } from './exceptions/handleExceptions.middleware';
 import { handleServerErrors } from './errors/handleServerErrors.middleware';
 
 import config from './config.json';
-
-dotenv.config();
 
 // set the UV_THREADPOOL_SIZE to the numbers of threads of the machine
 process.env.UV_THREADPOOL_SIZE = `${os.cpus().length ?? 4}`;
