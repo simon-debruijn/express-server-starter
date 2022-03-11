@@ -3,6 +3,7 @@ import * as jwtProvider from '../jwts/jwt.provider';
 import bcrypt from 'bcrypt';
 import { MutationNotAllowedException } from '../exceptions/MutationNotAllowedException';
 import { BadRequest } from 'ts-httpexceptions';
+import { JWT_SECRET } from '../constants';
 
 let users: IUser[] = [];
 

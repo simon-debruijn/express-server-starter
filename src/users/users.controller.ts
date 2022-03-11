@@ -7,6 +7,7 @@ import { BadRequest } from 'ts-httpexceptions';
 import bcrypt from 'bcrypt';
 import * as jwtProvider from '../jwts/jwt.provider';
 import { Exception } from '../exceptions/Exception';
+import { JWT_SECRET } from '../constants';
 
 export async function register(
   req: Request,
