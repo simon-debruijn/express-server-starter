@@ -8,8 +8,6 @@ import {
 import { IUser } from './IUser';
 
 export class User implements IUser {
-  [key: string]: unknown;
-
   @IsEmail()
   email: string;
 
