@@ -10,7 +10,6 @@ export async function handleAuthentication(
   next: NextFunction,
 ) {
   try {
-    // get token from headers
     const token = req.headers.authorization;
 
     if (!token || !token?.startsWith('Bearer ')) {
