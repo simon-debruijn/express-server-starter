@@ -57,14 +57,10 @@ export async function login(req: Request, res: Response, next: NextFunction) {
       throw new BadRequest('Was unable to login');
     }
 
-    const token = await jwtProvider.sign(
-      { email },
-      process.env.JWT_SECRET ?? '',
-      {
-        algorithm: 'HS256',
-        expiresIn: '1d',
-      },
-    );
+    const token = await jwtProvider.sign({ email }, JWT_SECRET, {
+      algorithm: 'HS256',
+      expiresIn: '1d',
+    });
 
     await usersRepository.changeUserByEmail(user.email, {
       tokens: [...user.tokens, token],
@@ -81,9 +77,13 @@ export async function changeUserByEmail(
   res: Response,
   next: NextFunction,
 ) {
-  const { email } = req.params;
-  const properties = req.body;
-  const { password, ...userWithoutPassword } =
-    (await usersRepository.changeUserByEmail(email, properties)) ?? {};
-  res.send(userWithoutPassword);
+  try {
+    const { email } = req.params;
+    const properties = req.body;
+    const { password, ...userWithoutPassword } =
+      (await usersRepository.changeUserByEmail(email, properties)) ?? {};
+    res.send(userWithoutPassword);
+  } catch (err) {
+    next(err);
+  }
 }

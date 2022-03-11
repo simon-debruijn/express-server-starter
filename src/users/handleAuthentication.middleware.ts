@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { Unauthorized } from 'ts-httpexceptions';
 import * as usersRepository from '../users/users.inMemory.repository';
 import * as jwtProvider from '../jwts/jwt.provider';
+import { JWT_SECRET } from '../constants';
 
 export async function handleAuthentication(
   req: Request,
@@ -19,13 +20,9 @@ export async function handleAuthentication(
     const tokenWithoutPrefix = token.split('Bearer ')[1];
 
     // verify token with secret
-    const decoded = await jwtProvider.verify(
-      tokenWithoutPrefix,
-      process.env.JWT_SECRET ?? '',
-      {
-        algorithms: ['HS256'],
-      },
-    );
+    const decoded = await jwtProvider.verify(tokenWithoutPrefix, JWT_SECRET, {
+      algorithms: ['HS256'],
+    });
 
     const { email } = decoded;
 

@@ -19,14 +19,10 @@ export async function addUser({
 }> {
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const token = await jwtProvider.sign(
-    { email },
-    process.env.JWT_SECRET ?? '',
-    {
-      algorithm: 'HS256',
-      expiresIn: '1d',
-    },
-  );
+  const token = await jwtProvider.sign({ email }, JWT_SECRET, {
+    algorithm: 'HS256',
+    expiresIn: '1d',
+  });
 
   const user = {
     email,
