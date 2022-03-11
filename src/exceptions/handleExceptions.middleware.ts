@@ -14,8 +14,8 @@ export async function handleExceptions(
     return response.status(error.status).send({ status, name, message, type });
   }
   if (error instanceof ValidationException) {
-    const { name, message, stack, errors } = error;
-    return response.status(400).send({ name, message, stack, errors });
+    const { name, message, stack, cause } = error;
+    return response.status(400).send({ name, message, stack, cause });
   }
   if (error instanceof Exception) {
     const { name, message, stack } = error;
