@@ -45,9 +45,9 @@ describe('users.inMemory.repository', () => {
   test("changeUserByEmail should throw BadRequest exception if user doesn't exist", async () => {
     try {
       await usersRepository.changeUserByEmail(validEmail, { tokens: [] });
-    } catch (error: any) {
-      expect(error).toBeInstanceOf(BadRequest);
-      expect(error.message).toEqual('User not found');
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(BadRequest);
+      expect(err.message).toEqual('User not found');
     }
   });
 
@@ -61,9 +61,9 @@ describe('users.inMemory.repository', () => {
       await usersRepository.changeUserByEmail(validEmail, {
         password: 'gotcha',
       });
-    } catch (error: any) {
-      expect(error).toBeInstanceOf(MutationNotAllowedException);
-      expect(error.message).toEqual(
+    } catch (err: any) {
+      expect(err).toBeInstanceOf(MutationNotAllowedException);
+      expect(err.message).toEqual(
         `Mutation is only allowed on the following properties: tokens`,
       );
     }
