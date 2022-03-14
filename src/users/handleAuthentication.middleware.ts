@@ -4,11 +4,11 @@ import * as usersRepository from '../users/users.inMemory.repository';
 import * as jwtProvider from '../jwts/jwt.provider';
 import { JWT_SECRET } from '../constants';
 
-export async function handleAuthentication(
+export const handleAuthentication = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) {
+) => {
   try {
     const token = req.headers.authorization;
 
@@ -36,4 +36,4 @@ export async function handleAuthentication(
   } catch (err: any) {
     next(new Unauthorized('Was unable to authenticate'));
   }
-}
+};

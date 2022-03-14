@@ -7,6 +7,7 @@ describe('users.inMemory.repository', () => {
   const validPassword = 'gjhfjghfygz';
 
   beforeEach(() => {
+    console.log('before setting env');
     process.env = { JWT_SECRET: 'shhhhh' };
 
     usersRepository.clearAllUsers();

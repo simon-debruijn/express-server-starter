@@ -9,11 +9,11 @@ import * as jwtProvider from '../jwts/jwt.provider';
 import { Exception } from '../exceptions/Exception';
 import { JWT_SECRET } from '../constants';
 
-export async function register(
+export const register = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) {
+) => {
   try {
     const user = new User(req.body);
 
@@ -39,9 +39,13 @@ export async function register(
   } catch (err: any) {
     next(err);
   }
-}
+};
 
-export async function login(req: Request, res: Response, next: NextFunction) {
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { email, password } = req.body;
 
@@ -71,13 +75,13 @@ export async function login(req: Request, res: Response, next: NextFunction) {
   } catch (err: any) {
     next(err);
   }
-}
+};
 
-export async function changeUserByEmail(
+export const changeUserByEmail = async (
   req: Request,
   res: Response,
   next: NextFunction,
-) {
+) => {
   try {
     const { email } = req.params;
     const properties = req.body;
@@ -87,4 +91,4 @@ export async function changeUserByEmail(
   } catch (err: any) {
     next(err);
   }
-}
+};

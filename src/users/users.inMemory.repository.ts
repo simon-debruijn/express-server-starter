@@ -7,17 +7,17 @@ import { JWT_SECRET } from '../constants';
 
 let users: IUser[] = [];
 
-export function clearAllUsers() {
+export const clearAllUsers = async () => {
   users = [];
-}
+};
 
-export async function addUser({
+export const addUser = async ({
   email,
   password,
 }: Pick<IUser, 'email' | 'password'>): Promise<{
   user: IUser | null;
   token: string | null;
-}> {
+}> => {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const token = await jwtProvider.sign({ email }, JWT_SECRET, {
@@ -34,22 +34,22 @@ export async function addUser({
   users.push(user);
 
   return { user, token };
-}
+};
 
-export async function findUser(
+export const findUser = async (
   properties: Partial<IUser>,
-): Promise<IUser | null> {
+): Promise<IUser | null> => {
   const user = users.find((user) =>
     Object.entries(properties).every(([key, value]) => user[key] === value),
   );
 
   return user ?? null;
-}
+};
 
-export async function changeUserByEmail(
+export const changeUserByEmail = async (
   email: string,
   properties: Partial<IUser>,
-): Promise<IUser | null> {
+): Promise<IUser | null> => {
   const allowedProperties = new Set(['tokens']);
 
   const userIndex = users.findIndex((user) => user.email === email);
@@ -75,4 +75,4 @@ export async function changeUserByEmail(
   users[userIndex] = changedUser;
 
   return changedUser ?? null;
-}
+};
