@@ -29,12 +29,10 @@ app.use('/users', usersRouter);
 app.use(handleExceptions);
 app.use(handleServerErrors);
 
-process.on('uncaughtException', (err) => {
+const exitProgram = (err: Error): never => {
   logger.error(err);
   process.exit(1);
-});
+};
 
-process.on('unhandledRejection', (err) => {
-  logger.error(err);
-  process.exit(1);
-});
+process.on('uncaughtException', exitProgram);
+process.on('unhandledRejection', exitProgram);
