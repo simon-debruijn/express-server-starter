@@ -12,6 +12,7 @@ import { handleExceptions } from './exceptions/handleExceptions.middleware';
 import { handleServerErrors } from './errors/handleServerErrors.middleware';
 
 import config from './config.json';
+import { logger } from '@logging/logger';
 
 // set the UV_THREADPOOL_SIZE to the numbers of threads of the machine
 process.env.UV_THREADPOOL_SIZE = `${os.cpus().length ?? 4}`;
@@ -27,3 +28,13 @@ app.use('/users', usersRouter);
 
 app.use(handleExceptions);
 app.use(handleServerErrors);
+
+process.on('uncaughtException', (err) => {
+  logger.error(err);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (err) => {
+  logger.error(err);
+  process.exit(1);
+});
