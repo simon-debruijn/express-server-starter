@@ -33,7 +33,7 @@ export async function handleAuthentication(
     }
     // call next if ok
     next();
-  } catch (err) {
+  } catch (err: any) {
     next(new Unauthorized('Was unable to authenticate'));
   }
 }

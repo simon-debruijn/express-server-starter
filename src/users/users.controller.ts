@@ -36,7 +36,7 @@ export async function register(
     const { password, ...userWithoutPassword } = userWithTokens ?? {};
 
     res.send({ user: userWithoutPassword, token });
-  } catch (err) {
+  } catch (err: any) {
     next(err);
   }
 }
@@ -68,7 +68,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
     });
 
     res.send({ token });
-  } catch (err) {
+  } catch (err: any) {
     next(err);
   }
 }
@@ -84,7 +84,7 @@ export async function changeUserByEmail(
     const { password, ...userWithoutPassword } =
       (await usersRepository.changeUserByEmail(email, properties)) ?? {};
     res.send(userWithoutPassword);
-  } catch (err) {
+  } catch (err: any) {
     next(err);
   }
 }

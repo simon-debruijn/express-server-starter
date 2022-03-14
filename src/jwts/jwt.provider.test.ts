@@ -38,7 +38,7 @@ describe('jwt.provider', () => {
       await jwtprovider.verify(token, wrongSecret, {
         algorithms: ['HS256'],
       });
-    } catch (error) {
+    } catch (error: any) {
       expect(error).toBeInstanceOf(JsonWebTokenError);
     }
   });
