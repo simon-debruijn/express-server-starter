@@ -1,13 +1,20 @@
 import { BadRequest } from 'ts-httpexceptions';
 import { MutationNotAllowedException } from '../exceptions/MutationNotAllowedException';
 import * as usersRepository from './users.inMemory.repository';
+import * as mockedConstants from '../constants';
+
+jest.mock('../constants', () => {
+  return {
+    JWT_SECRET: 'shhhhh',
+  };
+});
 
 describe('users.inMemory.repository', () => {
   const validEmail = 'test@test.com';
   const validPassword = 'gjhfjghfygz';
 
   beforeEach(() => {
-    process.env = { JWT_SECRET: 'shhhhh' };
+    jest.clearAllMocks();
 
     usersRepository.clearAllUsers();
   });

@@ -3,6 +3,13 @@ import { Exception } from '../exceptions/Exception';
 import { ValidationException } from '../exceptions/ValidationException';
 import { register } from './users.controller';
 import * as usersRepository from './users.inMemory.repository';
+import * as mockedConstants from '../constants';
+
+jest.mock('../constants', () => {
+  return {
+    JWT_SECRET: 'shhhhh',
+  };
+});
 
 describe('users.controller', () => {
   let request: Request,
@@ -15,6 +22,8 @@ describe('users.controller', () => {
   const validPassword = 'gjhfjghfygz';
 
   beforeEach(() => {
+    jest.clearAllMocks();
+
     exception = null;
     responseBody = null;
 
@@ -27,8 +36,6 @@ describe('users.controller', () => {
     next = jest.fn((err) => {
       if (err) exception = err;
     }) as unknown as NextFunction;
-
-    process.env = { JWT_SECRET: 'shhhhh' };
 
     usersRepository.clearAllUsers();
   });
