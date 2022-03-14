@@ -9,8 +9,10 @@ export const handleServerErrors = (
   next: NextFunction,
 ) => {
   logger.error(error);
+
   const { status, message, type, name } = new InternalServerError(
     'Internal Server Error',
   );
+
   response.status(status).send({ status, message, type, name });
 };
