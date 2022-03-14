@@ -30,7 +30,7 @@ app.use(handleExceptions);
 app.use(handleServerErrors);
 
 const exitProgram = (err: Error): never => {
-  logger.error(err);
+  logger.fatal(err);
   process.exit(1);
 };
 
