@@ -1,9 +1,10 @@
 import { IUser } from './IUser';
 import * as jwtProvider from '../jwts/jwt.provider';
 import bcrypt from 'bcrypt';
-import { MutationNotAllowedException } from '../exceptions/MutationNotAllowedException';
 import { BadRequest } from 'ts-httpexceptions';
 import { JWT_SECRET } from '../constants';
+import { AllowedPropertiesException } from '../exceptions/AllowedPropertiesException';
+import { arePropertiesAllowed } from '../utilities/arePropertiesAllowed';
 
 let users: IUser[] = [];
 
@@ -39,9 +40,20 @@ export const addUser = async ({
 export const findUser = async (
   properties: Partial<IUser>,
 ): Promise<IUser | null> => {
-  const user = users.find((user) =>
-    Object.entries(properties).every(([key, value]) => user[key] === value),
-  );
+  const allowedProperties = ['email'];
+
+  if (!arePropertiesAllowed(Object.keys(properties), allowedProperties)) {
+    throw new AllowedPropertiesException(allowedProperties);
+  }
+
+  const user = users.find((user) => {
+    const everyPropertyMatches = !!Object.entries(properties).every(
+      // We can ignore this warning since we check if the property is allowed
+      // eslint-disable-next-line security/detect-object-injection
+      ([key, value]) => user[key] === value,
+    );
+    return everyPropertyMatches;
+  });
 
   return user ?? null;
 };
@@ -50,29 +62,27 @@ export const changeUserByEmail = async (
   email: string,
   properties: Partial<IUser>,
 ): Promise<IUser | null> => {
-  const allowedProperties = new Set(['tokens']);
+  const allowedProperties = ['tokens'];
 
-  const userIndex = users.findIndex((user) => user.email === email);
+  if (!arePropertiesAllowed(Object.keys(properties), allowedProperties)) {
+    throw new AllowedPropertiesException(allowedProperties);
+  }
 
-  if (userIndex === -1) {
+  const user = users.find((user) => user.email === email);
+
+  if (!user) {
     throw new BadRequest('User not found');
   }
 
-  const notAllowed = Object.keys(properties).some(
-    (property) => !allowedProperties.has(property),
-  );
+  const changedUser = { ...user, ...properties };
 
-  if (notAllowed) {
-    throw new MutationNotAllowedException(
-      `Mutation is only allowed on the following properties: ${[
-        ...allowedProperties.keys(),
-      ].join(', ')}`,
-    );
-  }
-
-  const changedUser = { ...users[userIndex], ...properties };
-
-  users[userIndex] = changedUser;
+  users = users.map((usr) => {
+    if (usr.email === email) {
+      return changedUser;
+    } else {
+      return usr;
+    }
+  });
 
   return changedUser ?? null;
 };

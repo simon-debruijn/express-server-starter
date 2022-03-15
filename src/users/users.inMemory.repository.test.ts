@@ -1,5 +1,5 @@
 import { BadRequest } from 'ts-httpexceptions';
-import { MutationNotAllowedException } from '../exceptions/MutationNotAllowedException';
+import { AllowedPropertiesException } from '../exceptions/AllowedPropertiesException';
 import * as usersRepository from './users.inMemory.repository';
 import * as mockedConstants from '../constants';
 
@@ -58,7 +58,7 @@ describe('users.inMemory.repository', () => {
     }
   });
 
-  test('changeUserByEmail should throw MutationNotAllowedException if the provided property is not allowed', async () => {
+  test('changeUserByEmail should throw AllowedPropertiesException if the provided property is not allowed', async () => {
     try {
       await usersRepository.addUser({
         email: validEmail,
@@ -69,9 +69,9 @@ describe('users.inMemory.repository', () => {
         password: 'gotcha',
       });
     } catch (err: any) {
-      expect(err).toBeInstanceOf(MutationNotAllowedException);
+      expect(err).toBeInstanceOf(AllowedPropertiesException);
       expect(err.message).toEqual(
-        `Mutation is only allowed on the following properties: tokens`,
+        `Only these properties are supported:\n tokens`,
       );
     }
   });
